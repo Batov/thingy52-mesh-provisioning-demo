@@ -122,11 +122,11 @@ static uint32_t optimal_time_settings_onoff_calculate(drv_ext_light_sequence_t *
 {
     uint32_t inaccurate_results_num = 0;
 
-    uint32_t on_time_low_mult_reg  = (uint32_t) round(
+    uint32_t on_time_low_mult_reg  = (uint32_t) roundf(
                                      (real_val->on_time_ms /
                                      (REG_ONOFF_TIME_LOW_MULTIPLIER *
                                      255 / m_clkx_tics_pr_sec) ) / 1000);
-    uint32_t on_time_high_mult_reg = (uint32_t) round(
+    uint32_t on_time_high_mult_reg = (uint32_t) roundf(
                                      (real_val->on_time_ms /
                                      (REG_ONOFF_TIME_HIGH_MULTIPLIER *
                                      255 / m_clkx_tics_pr_sec) ) / 1000);
@@ -147,9 +147,9 @@ static uint32_t optimal_time_settings_onoff_calculate(drv_ext_light_sequence_t *
     }
 
     /* Find setting with smallest difference in time. */
-    uint32_t on_time_low_mult_ms  = (uint32_t) round(1000 * REG_ONOFF_TIME_LOW_MULTIPLIER *
+    uint32_t on_time_low_mult_ms  = (uint32_t) roundf(1000 * REG_ONOFF_TIME_LOW_MULTIPLIER *
                                     on_time_low_mult_reg  * 255 / m_clkx_tics_pr_sec);
-    uint32_t on_time_high_mult_ms = (uint32_t) round(1000 * REG_ONOFF_TIME_HIGH_MULTIPLIER *
+    uint32_t on_time_high_mult_ms = (uint32_t) roundf(1000 * REG_ONOFF_TIME_HIGH_MULTIPLIER *
                                     on_time_high_mult_reg * 255 / m_clkx_tics_pr_sec);
 
     /* Calculate error */
@@ -169,11 +169,11 @@ static uint32_t optimal_time_settings_onoff_calculate(drv_ext_light_sequence_t *
         inaccurate_results_num += diff_above_limit(desired_time, real_val->on_time_ms);
     }
 
-    uint32_t off_time_low_mult_reg  = (uint32_t) round(
+    uint32_t off_time_low_mult_reg  = (uint32_t) roundf(
                                       (real_val->off_time_ms /
                                       (REG_ONOFF_TIME_LOW_MULTIPLIER *
                                       255 / m_clkx_tics_pr_sec) ) / 1000);
-    uint32_t off_time_high_mult_reg = (uint32_t) round(
+    uint32_t off_time_high_mult_reg = (uint32_t) roundf(
                                       (real_val->off_time_ms /
                                       (REG_ONOFF_TIME_HIGH_MULTIPLIER *
                                       255 / m_clkx_tics_pr_sec) ) / 1000);
@@ -194,9 +194,9 @@ static uint32_t optimal_time_settings_onoff_calculate(drv_ext_light_sequence_t *
     }
 
     /* Find setting with smallest difference in time. */
-    uint32_t off_time_low_mult_ms  = (uint32_t) round(1000 * REG_ONOFF_TIME_LOW_MULTIPLIER *
+    uint32_t off_time_low_mult_ms  = (uint32_t) roundf(1000 * REG_ONOFF_TIME_LOW_MULTIPLIER *
                                      off_time_low_mult_reg * 255 / m_clkx_tics_pr_sec);
-    uint32_t off_time_high_mult_ms = (uint32_t) round(1000 * REG_ONOFF_TIME_HIGH_MULTIPLIER *
+    uint32_t off_time_high_mult_ms = (uint32_t) roundf(1000 * REG_ONOFF_TIME_HIGH_MULTIPLIER *
                                      off_time_high_mult_reg * 255 / m_clkx_tics_pr_sec);
 
 
@@ -238,7 +238,7 @@ static uint32_t optimal_time_settings_risefall_calculate(drv_ext_light_sequence_
     }
     else
     {
-        fade_in_time_low_mult_reg =   (uint32_t) round(
+        fade_in_time_low_mult_reg =   (uint32_t) roundf(
                                           (real_val->fade_in_time_ms /
                                           (REG_RISEFALL_TIME_LOW_MULTIPLIER *
                                           (reg_val->on_intensity - (4 * reg_val->off_intensity)) *
@@ -252,7 +252,7 @@ static uint32_t optimal_time_settings_risefall_calculate(drv_ext_light_sequence_
     }
     else
     {
-     fade_in_time_high_mult_reg = (uint32_t) round(
+     fade_in_time_high_mult_reg = (uint32_t) roundf(
                                           (real_val->fade_in_time_ms /
                                           (REG_RISEFALL_TIME_HIGH_MULTIPLIER *
                                           (reg_val->on_intensity - (4 * reg_val->off_intensity)) *
@@ -273,12 +273,12 @@ static uint32_t optimal_time_settings_risefall_calculate(drv_ext_light_sequence_
         fade_in_time_high_mult_reg = REG_HIGH_MINVAL;
     }
 
-    uint32_t fade_in_time_low_mult_ms = (uint32_t) round(1000 * ((reg_val->on_intensity -
+    uint32_t fade_in_time_low_mult_ms = (uint32_t) roundf(1000 * ((reg_val->on_intensity -
                                         (4 * reg_val->off_intensity)) *
                                         REG_RISEFALL_TIME_LOW_MULTIPLIER *
                                         fade_in_time_low_mult_reg * 255 / m_clkx_tics_pr_sec));
 
-    uint32_t fade_in_time_high_mult_ms = (uint32_t) round(1000 * ((reg_val->on_intensity -
+    uint32_t fade_in_time_high_mult_ms = (uint32_t) roundf(1000 * ((reg_val->on_intensity -
                                          (4 * reg_val->off_intensity)) *
                                          REG_RISEFALL_TIME_HIGH_MULTIPLIER *
                                          fade_in_time_high_mult_reg * 255 / m_clkx_tics_pr_sec));
@@ -303,12 +303,12 @@ static uint32_t optimal_time_settings_risefall_calculate(drv_ext_light_sequence_
 
     /* Fade out. */
 
-    uint32_t fade_out_time_low_mult_reg  = (uint32_t) round((real_val->fade_out_time_ms /
+    uint32_t fade_out_time_low_mult_reg  = (uint32_t) roundf((real_val->fade_out_time_ms /
                                            (REG_RISEFALL_TIME_LOW_MULTIPLIER *
                                            (reg_val->on_intensity - (4 * reg_val->off_intensity)) *
                                            (255 / m_clkx_tics_pr_sec))) / 1000);
 
-    uint32_t fade_out_time_high_mult_reg = (uint32_t) round((real_val->fade_out_time_ms /
+    uint32_t fade_out_time_high_mult_reg = (uint32_t) roundf((real_val->fade_out_time_ms /
                                            (REG_RISEFALL_TIME_HIGH_MULTIPLIER *
                                            (reg_val->on_intensity - (4 * reg_val->off_intensity)) *
                                            (255 / m_clkx_tics_pr_sec))) / 1000);
@@ -335,13 +335,13 @@ static uint32_t optimal_time_settings_risefall_calculate(drv_ext_light_sequence_
         fade_out_time_high_mult_reg = REG_HIGH_MINVAL;
     }
 
-    uint32_t fade_out_time_low_mult_ms =  (uint32_t) round( 1000 * (
+    uint32_t fade_out_time_low_mult_ms =  (uint32_t) roundf( 1000 * (
                                           (reg_val->on_intensity -
                                           (4 * reg_val->off_intensity)) *
                                           REG_RISEFALL_TIME_LOW_MULTIPLIER *
                                           fade_out_time_low_mult_reg * 255 / m_clkx_tics_pr_sec));
 
-    uint32_t fade_out_time_high_mult_ms = (uint32_t) round( 1000 * (
+    uint32_t fade_out_time_high_mult_ms = (uint32_t) roundf( 1000 * (
                                           (reg_val->on_intensity -
                                           (4 * reg_val->off_intensity)) *
                                           REG_RISEFALL_TIME_HIGH_MULTIPLIER *
